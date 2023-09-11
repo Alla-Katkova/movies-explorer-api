@@ -4,7 +4,7 @@ const { default: mongoose } = require('mongoose');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
-const ConflictError = require('../errors/ConflictError');
+
 // возвращает информацию о пользователе (email и имя)
 module.exports.getMyUserInfo = (req, res, next) => {
   User.findById(req.user._id)
