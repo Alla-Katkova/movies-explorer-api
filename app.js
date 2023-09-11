@@ -13,3 +13,7 @@ mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+app.use('/users', require('./routes/users'));
+
+app.listen(PORT);
