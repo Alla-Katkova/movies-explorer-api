@@ -2,13 +2,13 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const urlRegex = require('../utils/constants');
 const {
-  getMoviesFromDB,
+  getUsersMoviesFromDB,
   createMovie,
   deleteMovie,
-} = require('../controllers/cards');
+} = require('../controllers/movies');
 
 // GET /movies все сохранённые пользователем фильмы;
-router.get('/', getMoviesFromDB);
+router.get('/', getUsersMoviesFromDB);
 /// POST /movies создаёт фильм с переданными в теле данными;
 router.post('/', celebrate({
   body: Joi.object().keys({
