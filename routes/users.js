@@ -9,7 +9,9 @@ const {
 router.get('/me', getUserInfo);
 
 // PATCH /users/me — обновляет профиль
-router.patch('/me', celebrate({
+router.patch(
+  '/me',
+  celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30),
       email: Joi.string().required().email(),

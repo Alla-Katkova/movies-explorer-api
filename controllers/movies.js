@@ -4,14 +4,13 @@ const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
-
 // вывести все сохранённые пользователем фильмы;
 module.exports.getUsersMoviesFromDB = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-  //Movie.find({ owner: mongoose.Types.ObjectId(req.user._id) })
-  .then((movies) => {
-    res.status(200).send(movies);
-  })
+  // Movie.find({ owner: mongoose.Types.ObjectId(req.user._id) })
+    .then((movies) => {
+      res.status(200).send(movies);
+    })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         next(new BadRequestError('Некорректный _id'));
@@ -37,7 +36,8 @@ module.exports.createMovie = (req, res, next) => {
     nameRU,
     nameEN,
     thumbnail,
-    movieId, } = req.body;
+    movieId,
+  } = req.body;
 
   Movie.create({
     country,
@@ -51,7 +51,7 @@ module.exports.createMovie = (req, res, next) => {
     nameEN,
     thumbnail,
     movieId,
-    owner: req.user._id
+    owner: req.user._id,
   })
     .then((movie) => {
       res.status(201).send(movie);

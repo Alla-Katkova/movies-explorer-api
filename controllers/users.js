@@ -5,11 +5,12 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
+
 const { SECRET_KEY } = process.env;
 
 // создать юзера
 module.exports.createUser = (req, res, next) => {
-  const { name, email, password, } = req.body;
+  const { name, email, password } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, email, password: hash,
@@ -77,4 +78,3 @@ module.exports.login = (req, res, next) => {
       next(err);
     });
 };
-
