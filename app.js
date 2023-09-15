@@ -37,7 +37,8 @@ mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
 });
 
-app.use('/users', require('./routes/users'));
+// общий роут для карточек юзеров сайнапа и сайнина и общей
+app.use('/', require('./routes/index'));
 
 // логгер ошибок
 app.use(errorLogger);
