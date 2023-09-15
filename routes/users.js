@@ -1,6 +1,5 @@
 const router = require('express').Router();
-// const { celebrate, Joi } = require('celebrate');
-
+const { celebrate, Joi } = require('celebrate');
 const {
   getUserInfo,
   editUserInfo,
@@ -10,13 +9,12 @@ const {
 router.get('/me', getUserInfo);
 
 // PATCH /users/me — обновляет профиль
-router.patch('/me',
-// celebrate({
-//     body: Joi.object().keys({
-//       name: Joi.string().min(2).max(30),
-//       about: Joi.string().min(2).max(30),
-//     }),
-//   }),
+router.patch('/me', celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30),
+      email: Joi.string().required().email(),
+    }),
+  }),
   editUserInfo,
 );
 

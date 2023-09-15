@@ -8,27 +8,30 @@ const {
 } = require('../controllers/cards');
 
 // GET /movies все сохранённые пользователем фильмы;
-// POST /movies создаёт фильм с переданными в теле данными;
-// DELETE /movies/_id
-
-// GET — возвращает все карточки
 router.get('/', getMoviesFromDB);
-// POST — создаёт фильм с переданными в теле данными;
-router.post('/',
-// celebrate({
-//   body: Joi.object().keys({
-//     name: Joi.string().required().min(2).max(30),
-//     link: Joi.string().required().pattern(urlRegex),
-//   }),
-// }),
+/// POST /movies создаёт фильм с переданными в теле данными;
+router.post('/', celebrate({
+  body: Joi.object().keys({
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().pattern(urlRegex),
+    trailer: Joi.string().required().pattern(urlRegex),
+    thumbnail: Joi.string().required().pattern(urlRegex),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+  }),
+}),
 createMovie);
-// DELETE — удаляет карточку по идентификатору
-router.delete('/:movieId',
-// celebrate({
-//   params: Joi.object().keys({
-//     cardId: Joi.string().length(24).hex().required(),
-//   }),
-// }),
+// DELETE /movies/_id
+router.delete('/:movieId', celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().hex().required(),
+  }),
+}),
 deleteMovie);
 
 

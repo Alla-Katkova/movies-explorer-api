@@ -1,15 +1,26 @@
 const { default: mongoose } = require('mongoose');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
 // возвращает информацию о пользователе (email и имя)
-module.exports.getMyUserInfo = (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => res.send(user))
-    .catch(next);
+module.exports.getUserInfo = (req, res, next) => {
+  User.findById(req.params.userId)
+    .orFail()
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) {
+        next(new BadRequestError('Некорректный _id'));
+      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
+        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 // редактировать инфу юзера
