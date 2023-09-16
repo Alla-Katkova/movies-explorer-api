@@ -4,7 +4,7 @@ const { SECRET_KEY } = process.env;
 if (!SECRET_KEY) {
   throw new Error('нет ключа работать не буду');
 }
-// console.log(SECRET_KEY)
+
 const UnAutorizedError = require('../errors/UnAuthtorizedError');
 
 module.exports = (req, res, next) => {
