@@ -20,7 +20,7 @@ router.post(
       year: Joi.string().required(),
       description: Joi.string().required(),
       image: Joi.string().required().pattern(urlRegex),
-      trailer: Joi.string().required().pattern(urlRegex),
+      trailerLink: Joi.string().required().pattern(urlRegex),
       thumbnail: Joi.string().required().pattern(urlRegex),
       movieId: Joi.number().required(),
       nameRU: Joi.string().required(),

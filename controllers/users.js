@@ -33,10 +33,10 @@ module.exports.createUser = (req, res, next) => {
 
 // возвращает информацию о пользователе (email и имя)
 module.exports.getUserInfo = (req, res, next) => {
-  User.findById(req.params.userId)
+  User.findById(req.user._id)
     .orFail()
-    .then((user) => {
-      res.send(user);
+    .then(({ name, email }) => {
+      res.send({ name, email });
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
