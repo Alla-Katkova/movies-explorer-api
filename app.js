@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/rateLimiter');
+const errorsHandler = require('./middlewares/errorsHandler');
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 const app = express();
@@ -42,17 +43,6 @@ app.use(errorLogger);
 app.use(errors());
 
 // централизация ошибок
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        // ? 'На сервере произошла ошибка'
-        ? JSON.stringify(err)
-        : message,
-    });
-  next();
-});
+app.use(errorsHandler);
 
 app.listen(PORT);
