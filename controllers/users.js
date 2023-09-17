@@ -61,10 +61,12 @@ module.exports.editUserInfo = (req, res, next) => {
         next(new BadRequestError(err.message));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundError('Пользователь с указанным _id не найден.'));
-      } else {
-        next(err);
-      }
-    });
+      } else if (err.code === 11000) {
+      next(new ConflictError('Пользователь с таким email уже существует'));
+    } else {
+    next(err);
+  }
+});
 };
 
 module.exports.login = (req, res, next) => {
