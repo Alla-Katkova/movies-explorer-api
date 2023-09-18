@@ -13,9 +13,9 @@ module.exports.getUsersMoviesFromDB = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new BadRequestError('Некорректный _id'));
+        next(new BadRequestError('Некорректный запрос'));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        next(new NotFoundError('Not Found'));
+        next(new NotFoundError('Фильм не найден'));
       } else {
         next(err);
       }
@@ -59,7 +59,7 @@ module.exports.createMovie = (req, res, next) => {
 
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(err.message));
+        next(new BadRequestError('Некорректный запрос'));
       } else {
         next(err);
       }
@@ -80,9 +80,9 @@ module.exports.deleteMovie = (req, res, next) => {
         })
         .catch((err) => {
           if (err instanceof mongoose.Error.CastError) {
-            next(new BadRequestError('Некорректный _id'));
+            next(new BadRequestError('Некорректный запрос'));
           } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-            next(new NotFoundError('Фильм с указанным _id не найден.'));
+            next(new NotFoundError('Фильм не найден'));
           } else {
             next(err);
           }
@@ -90,7 +90,7 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'TypeError') {
-        next(new NotFoundError('Фильм с указанным _id не найден.'));
+        next(new NotFoundError('Фильм не найден'));
       } else {
         next(err);
       }

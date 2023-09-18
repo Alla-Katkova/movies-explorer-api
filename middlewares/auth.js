@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { SECRET_KEY } = process.env;
 if (!SECRET_KEY) {
-  throw new Error('нет ключа работать не буду');
+  throw new Error('Ключ не найден');
 }
 
 const UnAutorizedError = require('../errors/UnAuthtorizedError');
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    throw new UnAutorizedError('Авторизируйтесь(хедер авторизации пустой или не начинается с bearer)');
+    throw new UnAutorizedError('Необходима авторизация');
   }
 
   const token = authorization.replace('Bearer ', '');

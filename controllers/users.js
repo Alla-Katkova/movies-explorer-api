@@ -24,7 +24,7 @@ module.exports.createUser = (req, res, next) => {
         if (err.code === 11000) {
           next(new ConflictError('Пользователь с таким email уже существует'));
         } else if (err instanceof mongoose.Error.ValidationError) {
-          next(new BadRequestError(err.message));
+          next(new BadRequestError('Некорректный запрос'));
         } else {
           next(err);
         }
@@ -40,9 +40,9 @@ module.exports.getUserInfo = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new BadRequestError('Некорректный _id'));
+        next(new BadRequestError('Некорректный запрос'));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        next(new NotFoundError('Пользователь не найден.'));
       } else {
         next(err);
       }
@@ -58,9 +58,9 @@ module.exports.editUserInfo = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(err.message));
+        next(new BadRequestError('Некорректный запрос'));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        next(new NotFoundError('Пользователь не найден.'));
       } else if (err.code === 11000) {
         next(new ConflictError('Пользователь с таким email уже существует'));
       } else {
