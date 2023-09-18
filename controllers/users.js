@@ -62,11 +62,11 @@ module.exports.editUserInfo = (req, res, next) => {
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundError('Пользователь с указанным _id не найден.'));
       } else if (err.code === 11000) {
-      next(new ConflictError('Пользователь с таким email уже существует'));
-    } else {
-    next(err);
-  }
-});
+        next(new ConflictError('Пользователь с таким email уже существует'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.login = (req, res, next) => {
@@ -79,4 +79,8 @@ module.exports.login = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie('token').send({ message: 'Выход выполнен' });
 };

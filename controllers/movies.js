@@ -15,7 +15,7 @@ module.exports.getUsersMoviesFromDB = (req, res, next) => {
       if (err instanceof mongoose.Error.CastError) {
         next(new BadRequestError('Некорректный _id'));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        next(new NotFoundError('Not Found'));
       } else {
         next(err);
       }

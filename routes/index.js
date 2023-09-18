@@ -9,11 +9,14 @@ const NotFoundError = require('../errors/NotFoundError');
 router.use('/signup', signupRouter);
 router.use('/signin', signinRouter);
 const auth = require('../middlewares/auth');
+const { logout } = require('../controllers/users');
 
 router.use(auth);
 
 router.use('/users', usersRouter);
 router.use('/movies', moviesRouter);
+// роут на выход
+router.post('/signout', logout);
 
 // если запрос идет на неизвестный роут
 router.use('*', (req, res, next) => {
